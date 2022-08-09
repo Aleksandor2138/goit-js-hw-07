@@ -8,19 +8,23 @@ const body = document.querySelector("body");
 console.log(body);
 const gallery = document.querySelector(".gallery");
 
-const imgLists = galleryItems.map(({preview, original, description }) =>`<div class="gallery__item"><a class="gallery__link" href="${original}"><img class="gallery__image" src="${preview}" data-source="${original}" alt="${description}"/></a></div>`).join(" ");
+const imgLists = galleryItems.map(({ preview, original, description }) =>`<div class="gallery__item"><a class="gallery__link" href="${original}"><img class="gallery__image create" src="${preview}" data-source="${original}" alt="${description}"/></a></div>`).join(" ");
 gallery.insertAdjacentHTML("afterbegin", imgLists);
 
 // Первый вариант решения задачи
 
-// создание мобального окна и вложеных елементов
+// создание модального окна и вложеных елементов
 const modal = document.createElement("div");
 modal.classList.add("modal");
 body.appendChild(modal);
+
 const placeholder = document.createElement("div");
 placeholder.classList.add("basicLightbox__placeholder");
 placeholder.setAttribute("role", "dialog");
 modal.appendChild(placeholder);
+
+const img = document.createElement("img");
+img.classList.add("img-modal");
 
 const images = document.querySelectorAll(".gallery__image");
 
@@ -28,24 +32,24 @@ images.forEach(image => {
     const imageOpen = (event) => {
         // отмена действий браузера по  умолчанию 
         event.preventDefault();
-        // добавление классов basicLightbox + тег фото
+        // добавление классов basicLightbox + src фото
         modal.classList.add("basicLightbox", "basicLightbox--img", "basicLightbox--visible");
-        const img = document.createElement("img");
         img.src = image.dataset.source;
         while (placeholder.firstChild) {
             placeholder.removeChild(placeholder.firstChild);
         }
         placeholder.appendChild(img);
-
     }
     console.log(image.dataset.source);
     image.addEventListener('click', imageOpen);
 });
+//  Закрытие по клику мышки
+    console.log(img);
 
 const imageClose = (event) => {
-    if (event.target !== event.currentTarget) return;
+    if (event.target.nodeName  === "img") return;
     modal.classList.remove("basicLightbox", "basicLightbox--img", "basicLightbox--visible");
-        console.log(event.target);
+    console.log(event.currentTarget);
 };
 modal.addEventListener("click", imageClose);
 //  Закрытие с кнопки escape
@@ -62,7 +66,6 @@ body.addEventListener("keyup", pressKeyLightBox);
 
 
 //  Второй вариант реализации задачи
-
 // const images = document.querySelectorAll(".gallery__image");
 // images.forEach(image => {
 //     const imageOpen = (event) => {
@@ -75,16 +78,15 @@ body.addEventListener("keyup", pressKeyLightBox);
 //     console.log(image.dataset.source);
 //     image.addEventListener('click', imageOpen);
 // });
+
 // //  Закрытие с кнопки escape
 // const pressKeyLightBox = (event) => {
 //     const modal = document.querySelector(".basicLightbox");
-//     console.log(modal)
 //     if (modal.classList.contains("basicLightbox")){
 //         if (event.code === "Escape") {
 //             modal.classList.remove("basicLightbox", "basicLightbox--img", "basicLightbox--visible");
 //         }
-//         console.log(`dsgjkytyj`)
+//         console.log(`соблюдение первого if`)
 //     }
-
 // }
 // body.addEventListener("keyup", pressKeyLightBox);
