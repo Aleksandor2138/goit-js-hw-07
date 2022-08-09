@@ -33,15 +33,17 @@ images.forEach(image => {
         // отмена действий браузера по  умолчанию 
         event.preventDefault();
         // добавление классов basicLightbox + src фото
-        modal.classList.add("basicLightbox", "basicLightbox--img", "basicLightbox--visible");
-        img.src = image.dataset.source;
-        while (placeholder.firstChild) {
-            placeholder.removeChild(placeholder.firstChild);
+        if (event.target.dataset.source === image.dataset.source) {
+            modal.classList.add("basicLightbox", "basicLightbox--img", "basicLightbox--visible");
+            img.src = image.dataset.source;
+            while (placeholder.firstChild) {
+                placeholder.removeChild(placeholder.firstChild);
+            }
+            placeholder.appendChild(img);
         }
-        placeholder.appendChild(img);
     }
     console.log(image.dataset.source);
-    image.addEventListener('click', imageOpen);
+    gallery.addEventListener("click", imageOpen);
 });
 //  Закрытие по клику мышки
     console.log(img);
@@ -72,17 +74,19 @@ body.addEventListener("keyup", pressKeyLightBox);
 //         // отмена действий браузера по  умолчанию 
 //         event.preventDefault();
 //         // инициализация basicLightbox базовый с фото
-//         const instance = basicLightbox.create(`<img class="img-modal" src="${image.dataset.source}" >`);
-//         instance.show();
+//         if (event.target.dataset.source === image.dataset.source) {
+//             const instance = basicLightbox.create(`<img class="img-modal" src="${image.dataset.source}" >`);
+//             instance.show();
+//         }
 //     }
 //     console.log(image.dataset.source);
-//     image.addEventListener('click', imageOpen);
+//     gallery.addEventListener('click', imageOpen);
 // });
 
 // //  Закрытие с кнопки escape
 // const pressKeyLightBox = (event) => {
 //     const modal = document.querySelector(".basicLightbox");
-//     if (modal.classList.contains("basicLightbox")){
+//     if (modal.classList.contains("basicLightbox")===true){
 //         if (event.code === "Escape") {
 //             modal.classList.remove("basicLightbox", "basicLightbox--img", "basicLightbox--visible");
 //         }
